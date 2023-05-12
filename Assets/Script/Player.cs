@@ -11,27 +11,26 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _jumpPower;
 
-    [SerializeField]
-    private TextMeshProUGUI _keyText;
+    public Collider2D groundColl;
 
     Animator anim;
     Rigidbody2D rigid2D;
     SpriteRenderer sprite;
+    Collider2D coll;
 
     int _jumpCnt;
     int _maxJumpCount;
-    int score;
     void Awake()
     {
         anim = GetComponent<Animator>();
         rigid2D = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        coll = GetComponent<Collider2D>();
     }
     void Start()
     {
         _jumpCnt = 0;
         _maxJumpCount = 1;
-        score = 0;
     }
     void Update()
     {
@@ -74,10 +73,31 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Key"))
-        {   
-            score++;
+        {
+            GameManager.instance.keyScore++;
             collision.gameObject.SetActive(false);
-            _keyText.text = "Key : " + score;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ladder") && Input.GetKey(KeyCode.W))
+        {
+            _jumpCnt = 99;
+            rigid2D.gravityScale = 0;
+            groundColl.usedByEffector = true;
+            transform.Translate(new Vector2(0, 0.05f));
+            anim.SetTrigger("onLadder");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ladder"))
+        {
+            _jumpCnt = 0;
+            rigid2D.gravityScale = 1.5f;
+            groundColl.usedByEffector = false;
         }
     }
 }

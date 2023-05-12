@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Ground
   - Key
+  - GoldBox
+  - SilverBox
+  - BronzeBox
+  - Bear
+  - Turn
+  - Ladder
   layers:
   - Default
   - TransparentFX
