@@ -9,9 +9,10 @@ TagManager:
   - GoldBox
   - SilverBox
   - BronzeBox
-  - Bear
   - Turn
   - Ladder
+  - GetDamage
+  - Enemy
   layers:
   - Default
   - TransparentFX

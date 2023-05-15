@@ -5,8 +5,7 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed;
+    public float speed;
 
     public float jumpPower;
 
@@ -20,6 +19,9 @@ public class Player : MonoBehaviour
 
     int _jumpCnt;
     int _maxJumpCount;
+
+    bool isJump;
+    bool isWalk;
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -33,17 +35,18 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        float h = Input.GetAxisRaw("Horizontal") * _speed * Time.deltaTime;
-        transform.Translate(new Vector2(h, 0));
-
+        float h = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
+        if (isWalk)
+        {
+            transform.Translate(new Vector2(h, 0));
+            anim.SetBool("isRun", true);
+        }
         if (h < 0)
         {
-            anim.SetBool("isRun", true);
             sprite.flipX = true;
         }
         else if (h > 0)
         {
-            anim.SetBool("isRun", true);
             sprite.flipX = false;
         }
         else if (h == 0)
@@ -51,7 +54,7 @@ public class Player : MonoBehaviour
             anim.SetBool("isRun", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && _jumpCnt < _maxJumpCount)
+        if (Input.GetKeyDown(KeyCode.Space) && _jumpCnt < _maxJumpCount && isJump)
         {
             rigid2D.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
             anim.SetBool("isJump", true);
@@ -61,17 +64,13 @@ public class Player : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-    {
+    { 
         if (collision.gameObject.CompareTag("Ground"))
         {
+            isJump = true;
+            isWalk = true;
             _jumpCnt = 0;
             anim.SetBool("isJump", false);
-        }
-
-        if (collision.gameObject.CompareTag("Bear"))
-        {
-            Bear.instance.bearHp -= this.damage;
-            Debug.Log(Bear.instance.bearHp);
         }
     }
 
@@ -82,12 +81,23 @@ public class Player : MonoBehaviour
             GameManager.instance.keyCount++;
             collision.gameObject.SetActive(false);
         }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Enemy.instance.enemyHp -= this.damage;
+            Enemy.instance.HitColor();
+            int randint = Random.Range(-3, 4);
+            Debug.Log(randint);
+            rigid2D.AddForce(new Vector2(randint, 20f), ForceMode2D.Impulse);
+            Debug.Log(Enemy.instance.enemyHp);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ladder") && Input.GetKey(KeyCode.W))
         {
+            isJump = false;
+            isWalk = false;
             _jumpCnt = 99;
             rigid2D.gravityScale = 0;
             groundColl.usedByEffector = true;

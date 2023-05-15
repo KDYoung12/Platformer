@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bear : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-    public static Bear instance;
+    public static Enemy instance;
 
-    public float bearSpeed;
+    public float enemySpeed;
 
-    public float bearHp;
+    public float enemyHp;
 
-    public float bearMaxHp;
+    public float enemyMaxHp;
 
-    public float bearDamage;
+    public float enemyDamage;
 
     public GameObject key;
 
@@ -24,12 +24,12 @@ public class Bear : MonoBehaviour
     {
         instance = this;
         sprite = GetComponent<SpriteRenderer>();
-        bearHp = bearMaxHp;
+        enemyHp = enemyMaxHp;
     }
 
     private void Update()
     {
-        move = bearSpeed * Time.deltaTime;
+        move = enemySpeed * Time.deltaTime;
         transform.Translate(new Vector2(move, 0));
         if(move > 0)
         {
@@ -40,7 +40,7 @@ public class Bear : MonoBehaviour
             sprite.flipX = true;
         }
 
-        if(bearHp <= 0)
+        if(enemyHp <= 0)
         {
             gameObject.SetActive(false);
             Instantiate(key, gameObject.transform.position, Quaternion.identity);
@@ -52,8 +52,20 @@ public class Bear : MonoBehaviour
         if (collision.gameObject.CompareTag("Turn"))
         {
             Debug.Log("Tile end");
-            bearSpeed *= -1;
+            enemySpeed *= -1;
             Debug.Log(move.ToString());
         }
+    }
+
+    public void HitColor()
+    {
+        StartCoroutine(HitBearColor());
+    }
+
+    IEnumerator HitBearColor()
+    {
+        sprite.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        sprite.color = Color.white;
     }
 }
