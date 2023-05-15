@@ -8,15 +8,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed;
 
-    [SerializeField]
-    private float _jumpPower;
+    public float jumpPower;
+
+    public float damage;
 
     public Collider2D groundColl;
 
     Animator anim;
     Rigidbody2D rigid2D;
     SpriteRenderer sprite;
-    Collider2D coll;
 
     int _jumpCnt;
     int _maxJumpCount;
@@ -25,7 +25,6 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         rigid2D = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        coll = GetComponent<Collider2D>();
     }
     void Start()
     {
@@ -54,7 +53,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && _jumpCnt < _maxJumpCount)
         {
-            rigid2D.AddForce(new Vector2(0, _jumpPower), ForceMode2D.Impulse);
+            rigid2D.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
             anim.SetBool("isJump", true);
             _jumpCnt++;
             Debug.Log(_jumpCnt);
@@ -68,13 +67,19 @@ public class Player : MonoBehaviour
             _jumpCnt = 0;
             anim.SetBool("isJump", false);
         }
+
+        if (collision.gameObject.CompareTag("Bear"))
+        {
+            Bear.instance.bearHp -= this.damage;
+            Debug.Log(Bear.instance.bearHp);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Key"))
         {
-            GameManager.instance.keyScore++;
+            GameManager.instance.keyCount++;
             collision.gameObject.SetActive(false);
         }
     }

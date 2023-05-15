@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class Bear : MonoBehaviour
 {
+    public static Bear instance;
+
     public float bearSpeed;
+
+    public float bearHp;
+
+    public float bearMaxHp;
+
+    public float bearDamage;
+
+    public GameObject key;
 
     SpriteRenderer sprite;
 
@@ -12,7 +22,9 @@ public class Bear : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         sprite = GetComponent<SpriteRenderer>();
+        bearHp = bearMaxHp;
     }
 
     private void Update()
@@ -26,6 +38,12 @@ public class Bear : MonoBehaviour
         else if(move < 0)
         {
             sprite.flipX = true;
+        }
+
+        if(bearHp <= 0)
+        {
+            gameObject.SetActive(false);
+            Instantiate(key, gameObject.transform.position, Quaternion.identity);
         }
     }
 
