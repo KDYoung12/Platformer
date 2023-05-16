@@ -13,6 +13,8 @@ TagManager:
   - Ladder
   - GetDamage
   - Enemy
+  - Bear
+  - JumpItem
   layers:
   - Default
   - TransparentFX

@@ -17647,7 +17647,7 @@ MonoBehaviour:
   enemyHp: 0
   enemyMaxHp: 20
   enemyDamage: 0
-  key: {fileID: 0}
+  key: {fileID: 8482301208408945659, guid: ad5256823d1d14a4bb849ebb0ef383e4, type: 3}
 --- !u!70 &1169024950
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -18899,7 +18899,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2039503506}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.56, y: 3.79, z: 0}
+  m_LocalPosition: {x: 0.16, y: 22.36, z: 0}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18989,10 +18989,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bear
       objectReference: {fileID: 0}
-    - target: {fileID: 3100933515889371827, guid: 9e852fa336414874293ea092f50d91f7, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
     - target: {fileID: 3100933515889371832, guid: 9e852fa336414874293ea092f50d91f7, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -19036,14 +19032,6 @@ PrefabInstance:
     - target: {fileID: 3100933515889371832, guid: 9e852fa336414874293ea092f50d91f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3100933515889371833, guid: 9e852fa336414874293ea092f50d91f7, type: 3}
-      propertyPath: enemyMaxHp
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3100933515889371833, guid: 9e852fa336414874293ea092f50d91f7, type: 3}
-      propertyPath: enemySpeed
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e852fa336414874293ea092f50d91f7, type: 3}

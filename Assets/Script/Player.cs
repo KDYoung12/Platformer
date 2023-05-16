@@ -81,6 +81,11 @@ public class Player : MonoBehaviour
             GameManager.instance.keyCount++;
             collision.gameObject.SetActive(false);
         }
+        if (collision.gameObject.CompareTag("JumpItem"))
+        {
+            jumpPower += 4f;
+            collision.gameObject.SetActive(false);
+        }
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy.instance.enemyHp -= this.damage;
