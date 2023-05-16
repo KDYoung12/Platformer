@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    public static Enemy instance;
-
     public float enemySpeed;
 
     public float enemyHp;
@@ -14,15 +13,16 @@ public class Enemy : MonoBehaviour
 
     public float enemyDamage;
 
-    public GameObject key;
+    public GameObject Item;
+
+    public Slider enemyHpBar;
 
     SpriteRenderer sprite;
 
     float move;
 
-    private void Awake()
+    void Start()
     {
-        instance = this;
         sprite = GetComponent<SpriteRenderer>();
         enemyHp = enemyMaxHp;
     }
@@ -43,17 +43,16 @@ public class Enemy : MonoBehaviour
         if(enemyHp <= 0)
         {
             gameObject.SetActive(false);
-            Instantiate(key, gameObject.transform.position, Quaternion.identity);
+            Instantiate(Item, gameObject.transform.position, Quaternion.identity);
         }
+        enemyHpBar.value = enemyHp / enemyMaxHp;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Turn"))
         {
-            Debug.Log("Tile end");
             enemySpeed *= -1;
-            Debug.Log(move.ToString());
         }
     }
 

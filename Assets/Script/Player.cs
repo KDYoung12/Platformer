@@ -20,8 +20,7 @@ public class Player : MonoBehaviour
     int _jumpCnt;
     int _maxJumpCount;
 
-    bool isJump;
-    bool isWalk;
+    bool isLadder;
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -36,11 +35,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         float h = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
-        if (isWalk)
+        if (!isLadder)
         {
             transform.Translate(new Vector2(h, 0));
             anim.SetBool("isRun", true);
         }
+
         if (h < 0)
         {
             sprite.flipX = true;
@@ -54,21 +54,26 @@ public class Player : MonoBehaviour
             anim.SetBool("isRun", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && _jumpCnt < _maxJumpCount && isJump)
+        if (Input.GetKeyDown(KeyCode.Space) && _jumpCnt < _maxJumpCount && !isLadder)
         {
             rigid2D.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
             anim.SetBool("isJump", true);
             _jumpCnt++;
             Debug.Log(_jumpCnt);
         }
+
+        if (Input.GetKey(KeyCode.W) && isLadder)
+        {
+            Debug.Log("올라가는 중");
+            transform.Translate(new Vector2(0, 0.0005f));
+            anim.SetTrigger("onLadder");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     { 
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.layer == 6)
         {
-            isJump = true;
-            isWalk = true;
             _jumpCnt = 0;
             anim.SetBool("isJump", false);
         }
@@ -83,31 +88,28 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("JumpItem"))
         {
-            jumpPower += 4f;
+            jumpPower += 2f;
             collision.gameObject.SetActive(false);
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Enemy.instance.enemyHp -= this.damage;
-            Enemy.instance.HitColor();
-            int randint = Random.Range(-3, 4);
-            Debug.Log(randint);
-            rigid2D.AddForce(new Vector2(randint, 20f), ForceMode2D.Impulse);
-            Debug.Log(Enemy.instance.enemyHp);
+            collision.GetComponent<Enemy>().enemyHp -= this.damage;
+            collision.GetComponent<Enemy>().HitColor();
+            //Enemy.instance.enemyHp -= this.damage;
+            //Enemy.instance.HitColor();
+            int randintX = Random.Range(-3, 4);
+            int randintY = Random.Range(10, 15);
+            Debug.Log(randintX + "이건 X");
+            Debug.Log(randintY + "이건 Y");
+            rigid2D.AddForce(new Vector2(randintX, randintY), ForceMode2D.Impulse);
+            Debug.Log(collision.GetComponent<Enemy>().enemyHp);
         }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ladder") && Input.GetKey(KeyCode.W))
+        if (collision.gameObject.CompareTag("Ladder"))
         {
-            isJump = false;
-            isWalk = false;
-            _jumpCnt = 99;
+            isLadder = true;
+            // 지금 사다리 타고있는 중이라면 isLadder = false
             rigid2D.gravityScale = 0;
             groundColl.usedByEffector = true;
-            transform.Translate(new Vector2(0, 0.05f));
-            anim.SetTrigger("onLadder");
         }
     }
 
@@ -115,6 +117,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ladder"))
         {
+            isLadder = false;
             _jumpCnt = 0;
             rigid2D.gravityScale = 1.5f;
             groundColl.usedByEffector = false;
