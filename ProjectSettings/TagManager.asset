@@ -15,6 +15,7 @@ TagManager:
   - Enemy
   - Bear
   - JumpItem
+  - Bullet
   layers:
   - Default
   - TransparentFX
