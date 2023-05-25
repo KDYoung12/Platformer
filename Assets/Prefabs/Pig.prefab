@@ -125,8 +125,8 @@ GameObject:
   - component: {fileID: 4783525469639786644}
   - component: {fileID: 4783525469639786645}
   - component: {fileID: 4783525469639786655}
-  - component: {fileID: 4783525469639786642}
   - component: {fileID: 4783525469639786641}
+  - component: {fileID: 4783525469639786642}
   m_Layer: 3
   m_Name: Pig
   m_TagString: Enemy
@@ -244,24 +244,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4783525469639786642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4783525469639786646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6f04d85c76b82140b5a3972a61f72f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemySpeed: 2.5
-  enemyHp: 0
-  enemyMaxHp: 20
-  enemyDamage: 0
-  Item: {fileID: 0}
-  enemyHpBar: {fileID: 2872474875516632803}
 --- !u!70 &4783525469639786641
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -278,6 +260,24 @@ CapsuleCollider2D:
   m_Offset: {x: -0.03, y: -0.04}
   m_Size: {x: 0.26, y: 0.0001}
   m_Direction: 0
+--- !u!114 &4783525469639786642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4783525469639786646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f04d85c76b82140b5a3972a61f72f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpeed: 2.5
+  enemyHp: 0
+  enemyMaxHp: 20
+  enemyDamage: 10
+  Item: {fileID: 0}
+  enemyHpBar: {fileID: 2872474875516632803}
 --- !u!1 &5744749025790891552
 GameObject:
   m_ObjectHideFlags: 0

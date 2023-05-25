@@ -16,6 +16,8 @@ TagManager:
   - Bear
   - JumpItem
   - Bullet
+  - Apple
+  - Shop
   layers:
   - Default
   - TransparentFX

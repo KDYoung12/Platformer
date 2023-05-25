@@ -390,7 +390,7 @@ MonoBehaviour:
   enemySpeed: 3
   enemyHp: 0
   enemyMaxHp: 30
-  enemyDamage: 0
+  enemyDamage: 15
   Item: {fileID: 8482301208408945659, guid: ad5256823d1d14a4bb849ebb0ef383e4, type: 3}
   enemyHpBar: {fileID: 8971991145415403102}
 --- !u!1 &8971991146069381695

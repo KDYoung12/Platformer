@@ -8,9 +8,17 @@ public class Bullet : MonoBehaviour
 
     public float bulletDamage;
 
+    float lifeTime = 1f;
     void Update()
     {
-        transform.Translate(new Vector2(bulletSpeed * Time.deltaTime, 0f));        
+        lifeTime -= Time.deltaTime;
+
+        transform.Translate(new Vector2(bulletSpeed * Time.deltaTime, 0f));
+        
+        if(lifeTime <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,7 +27,7 @@ public class Bullet : MonoBehaviour
         {
             collision.GetComponent<Enemy>().enemyHp -= bulletDamage;
             collision.GetComponent<Enemy>().HitColor();
-            gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
 }
