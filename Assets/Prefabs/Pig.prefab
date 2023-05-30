@@ -275,9 +275,11 @@ MonoBehaviour:
   enemySpeed: 2.5
   enemyHp: 0
   enemyMaxHp: 20
-  enemyDamage: 10
+  enemyDamage: 15
+  enemyGold: 5
   Item: {fileID: 0}
   enemyHpBar: {fileID: 2872474875516632803}
+  player: {fileID: 6400694444148700067, guid: 1cc918028ca45da42a6c723c507a8d04, type: 3}
 --- !u!1 &5744749025790891552
 GameObject:
   m_ObjectHideFlags: 0

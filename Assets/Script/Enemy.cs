@@ -15,11 +15,13 @@ public class Enemy : MonoBehaviour
 
     public float enemyDamage;
 
+    public int enemyGold;
+
     public GameObject Item;
 
     public Slider enemyHpBar;
 
-    Player player;
+    public Player player;
 
     SpriteRenderer sprite;
 
@@ -28,7 +30,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
-        player = GetComponent<Player>();
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         enemyHp = enemyMaxHp;
     }
 
@@ -47,9 +49,9 @@ public class Enemy : MonoBehaviour
 
         if(enemyHp <= 0)
         {
-            //player.gold += 10;
             gameObject.SetActive(false);
-            if(Item != null)
+            player.gold += enemyGold;
+            if (Item != null)
             {
                 Instantiate(Item, new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 0.2f) , Quaternion.identity);
             }
@@ -69,7 +71,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().playerHp -= (Mathf.Abs(collision.gameObject.GetComponent<Player>().defense) - Mathf.Abs(enemyDamage));
+            collision.gameObject.GetComponent<Player>().playerHp -= enemyDamage - collision.gameObject.GetComponent<Player>().defense;
         }
     }
 

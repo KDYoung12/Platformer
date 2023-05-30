@@ -14,8 +14,6 @@ public class Player : MonoBehaviour
 
     public float jumpPower;
 
-    public float damage;
-
     public float defense;
 
     public int gold;
@@ -30,9 +28,13 @@ public class Player : MonoBehaviour
 
     public float climbSpeed;
 
+    public float bulletCoolTimeMax;
+
     private bool isClimbing = false;
 
     private bool isLadder;
+
+    private bool isInShop = false;
 
     Animator anim;
     Rigidbody2D rigid2D;
@@ -53,7 +55,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        bulletCoolTime = 0.2f;
+        bulletCoolTimeMax = 0.2f;
         _jumpCnt = 0;
         _maxJumpCount = 1;
     }
@@ -91,6 +93,12 @@ public class Player : MonoBehaviour
             anim.SetBool("isRun", false);
         }
 
+        if (Input.GetKeyDown(KeyCode.P) && isInShop)
+        {
+            Debug.Log("PPPP");
+            shop.SetActive(true);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && _jumpCnt < _maxJumpCount && !isLadder)
         {
             rigid2D.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
@@ -111,7 +119,7 @@ public class Player : MonoBehaviour
             {
                 Instantiate(bullet, firePos.position, Quaternion.identity);
             }
-            bulletCoolTime = 0.2f;
+            bulletCoolTime = bulletCoolTimeMax;
         }
         playerHpBar.value = playerHp / playerMaxHp;
     }
@@ -142,18 +150,6 @@ public class Player : MonoBehaviour
             playerHp += 10;
             collision.gameObject.SetActive(false);
         }
-        if (collision.gameObject.CompareTag("Shop"))
-        {
-            shop.SetActive(true);
-            GameManager.instance.OnPKey();
-            /*
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                Debug.Log("PPPP");
-                shop.SetActive(true);
-            }   
-            */
-        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -174,6 +170,12 @@ public class Player : MonoBehaviour
                 isClimbing = false;
             }
         }
+
+        if (collision.gameObject.CompareTag("Shop"))
+        {
+            GameManager.instance.OnPKey();
+            isInShop = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -189,6 +191,7 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Shop"))
         {
+            isInShop = false;
             GameManager.instance.OffPKey();
             shop.SetActive(false);
         }
