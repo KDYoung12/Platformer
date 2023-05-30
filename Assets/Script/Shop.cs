@@ -12,13 +12,6 @@ public class Shop : MonoBehaviour
 
     public Bullet Arm;
 
-    private void Start()
-    {
-        Arm = GameObject.FindWithTag("Bullet").GetComponent<Bullet>();
-        User = GameObject.FindWithTag("Player").GetComponent<Player>();
-        Debug.Log("Player HP =" + User.playerHp.ToString());
-    }
-
     public void OnClickHp()
     {
         if (User.playerHp >= 100)

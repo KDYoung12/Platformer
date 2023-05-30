@@ -7,12 +7,25 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public GameObject pKey;
+    public GameObject shopKey;
+
+    public GameObject npcKey;
 
     public int keyCount;
 
     public TextMeshProUGUI goldText;
-     
+
+    // Player의 능력치를 보여주는 Text
+    public TextMeshProUGUI attackText;
+    public TextMeshProUGUI speedText;
+    public TextMeshProUGUI defenseText;
+    public TextMeshProUGUI jumpText;
+    public TextMeshProUGUI attackSppedText;
+
+    public Player User;
+
+    public Bullet Arm;
+
     private void Awake()
     {
         instance = this;
@@ -20,22 +33,37 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        keyCount = 0;   
+        keyCount = 0;
     }
 
     private void Update()
     {
-        goldText.text = "GOLD : " + GameObject.FindWithTag("Player").GetComponent<Player>().gold.ToString();
+        goldText.text = "GOLD : " + User.gold.ToString();
+        attackText.text = "Attack : " + Arm.bulletDamage.ToString();
+        speedText.text = "Speed : " + User.speed.ToString();
+        jumpText.text = "Jump : " + User.jumpPower.ToString();
+        defenseText.text = "Defense : " + User.defense.ToString();
+        attackSppedText.text = "AttackSpeed : " + User.bulletCoolTimeMax.ToString();
     }
 
-    public void OnPKey()
+    public void OnShop()
     {
         Debug.Log("OnPKey");
-        pKey.SetActive(true);
+        shopKey.SetActive(true);
     }
 
-    public void OffPKey()
+    public void OffShop()
     {
-        pKey.SetActive(false);
+        shopKey.SetActive(false);
+    }
+
+    public void OnNPC()
+    {
+        npcKey.SetActive(true);
+    }
+
+    public void OffNPC()
+    {
+        npcKey.SetActive(false);
     }
 }

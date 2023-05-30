@@ -73,11 +73,14 @@ public class Player : MonoBehaviour
         }
 
         bulletCoolTime -= Time.deltaTime;
+
         float h = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
 
-        transform.Translate(new Vector2(h, 0));
-        anim.SetBool("isRun", true);
-
+        if (!isLadder)
+        {
+            transform.Translate(new Vector2(h, 0));
+            anim.SetBool("isRun", true);
+        }
         if (h < 0)
         {
             sprite.flipX = true;
@@ -142,7 +145,7 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("JumpItem"))
         {
-            jumpPower += 2f;
+            jumpPower += 0.5f;
             collision.gameObject.SetActive(false);
         }
         if (collision.gameObject.CompareTag("Apple"))
@@ -161,20 +164,18 @@ public class Player : MonoBehaviour
             coll.isTrigger = true;
             float verticalInput = Input.GetAxis("Vertical");
 
-            if (verticalInput != 0f)
-            {
-                isClimbing = true;
-            }
-            else
-            {
-                isClimbing = false;
-            }
+            isClimbing = true;
         }
 
         if (collision.gameObject.CompareTag("Shop"))
         {
-            GameManager.instance.OnPKey();
+            GameManager.instance.OnShop();
             isInShop = true;
+        }
+
+        if (collision.gameObject.CompareTag("NPC"))
+        {
+            GameManager.instance.OnNPC();
         }
     }
 
@@ -192,8 +193,13 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Shop"))
         {
             isInShop = false;
-            GameManager.instance.OffPKey();
+            GameManager.instance.OffShop();
             shop.SetActive(false);
+        }
+
+        if (collision.gameObject.CompareTag("NPC"))
+        {
+            GameManager.instance.OffNPC();
         }
     }
 }

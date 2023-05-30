@@ -29,5 +29,10 @@ public class Bullet : MonoBehaviour
             collision.GetComponent<Enemy>().HitColor();
             Destroy(this.gameObject);
         }
+        if (collision.gameObject.CompareTag("NPC"))
+        {
+            collision.GetComponent<Enemy>().HitColor();
+            Destroy(this.gameObject);
+        }
     }
 }
