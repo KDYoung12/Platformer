@@ -9,7 +9,7 @@ public class NPC : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.P))
         {
-
+            Debug.Log("NPC Text");
         }
     }
 }

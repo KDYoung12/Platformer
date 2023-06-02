@@ -16,6 +16,7 @@ public class Shop : MonoBehaviour
     {
         if (User.playerHp >= 100)
         {
+            Debug.Log("HP Full");
             return;
         }
 
@@ -53,7 +54,7 @@ public class Shop : MonoBehaviour
         if (attackCount > 1 )
             return;
 
-        else if (User.gold <= 101)
+        else if (User.gold < 100)
         {
             Debug.Log("No Money");
             return;

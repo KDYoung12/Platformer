@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -21,6 +22,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI defenseText;
     public TextMeshProUGUI jumpText;
     public TextMeshProUGUI attackSppedText;
+
+    public GameObject Gold_Button;
 
     public Player User;
 
@@ -59,11 +62,18 @@ public class GameManager : MonoBehaviour
 
     public void OnNPC()
     {
+        Debug.Log("Press to NPC text");
         npcKey.SetActive(true);
     }
 
     public void OffNPC()
     {
         npcKey.SetActive(false);
+    }
+
+    public void OnClickNPCGold()
+    {
+        User.gold += 100;
+        Destroy(Gold_Button);
     }
 }

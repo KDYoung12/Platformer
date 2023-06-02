@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
 
     public GameObject shop;
 
+    public GameObject NPC_Panel;
+
     public Slider playerHpBar;
 
     public float climbSpeed;
@@ -35,6 +37,8 @@ public class Player : MonoBehaviour
     private bool isLadder;
 
     private bool isInShop = false;
+
+    private bool isNPC = false;
 
     Animator anim;
     Rigidbody2D rigid2D;
@@ -100,6 +104,12 @@ public class Player : MonoBehaviour
         {
             Debug.Log("PPPP");
             shop.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P) && isNPC)
+        {
+            Debug.Log("NPC");
+            NPC_Panel.SetActive(true);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && _jumpCnt < _maxJumpCount && !isLadder)
@@ -176,6 +186,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("NPC"))
         {
             GameManager.instance.OnNPC();
+            isNPC = true;
         }
     }
 
@@ -199,7 +210,9 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("NPC"))
         {
+            isNPC = false;
             GameManager.instance.OffNPC();
+            NPC_Panel.SetActive(false);
         }
     }
 }
